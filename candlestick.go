@@ -1,4 +1,4 @@
-package main
+package ta
 
 //Candlestick are used to determine price movement and calculate indicators
 type Candlestick struct {

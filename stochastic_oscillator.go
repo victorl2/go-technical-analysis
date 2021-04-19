@@ -1,4 +1,4 @@
-package main
+package ta
 
 // Stochastic calculates the Stochastic Oscillator for the candlestick for the given period
 func Stochastic(candles []Candlestick, kPeriod, dPeriod, smooth int) ([]float64, []float64) {

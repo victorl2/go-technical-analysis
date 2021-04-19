@@ -1,4 +1,4 @@
-package main
+package ta
 
 // MEAN calculates the mean value for values provided
 func MEAN(values []float64) float64 {

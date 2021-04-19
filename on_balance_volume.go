@@ -1,4 +1,4 @@
-package main
+package ta
 
 //OBV calculates the On Balance Volume indicator
 func OBV(values []Candlestick) []float64 {
