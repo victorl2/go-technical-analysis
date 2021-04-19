@@ -15,7 +15,7 @@ func SMA(values []float64, period int) []float64 {
 	if len(values) < period {
 		return result
 	}
-	for index, _ := range values {
+	for index := range values {
 		indexPlusOne := index + 1
 		if indexPlusOne >= period {
 			avg := MEAN(values[indexPlusOne-period : indexPlusOne])
@@ -28,7 +28,7 @@ func SMA(values []float64, period int) []float64 {
 // WMA calculates the Weighted Moving Average for the provided period
 func WMA(values []float64, period int) []float64 {
 	var result []float64
-	for index, _ := range values {
+	for index := range values {
 		indexPlusOne := index + 1
 		if indexPlusOne >= period {
 			var res []float64
@@ -36,12 +36,12 @@ func WMA(values []float64, period int) []float64 {
 
 			// Get the sum of the number of entries
 			var sum float64 = 0
-			for idx, _ := range sl {
-				sum += float64(idx + 1)
+			for i := range sl {
+				sum += float64(i + 1)
 			}
 
-			for idx, element := range sl {
-				res = append(res, element*(float64(idx+1)/sum))
+			for i, element := range sl {
+				res = append(res, element*(float64(i+1)/sum))
 			}
 
 			var total float64 = 0
@@ -69,7 +69,7 @@ func EMA(values []float64, period int) []float64 {
 	return result
 }
 
-// Dema calculates the Double Exponential Moving Average for the provided period
+// DEMA calculates the Double Exponential Moving Average for the provided period
 func DEMA(values []float64, period int) []float64 {
 	var result []float64
 	ema := EMA(values, period)
