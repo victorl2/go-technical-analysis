@@ -5,7 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Atr", func() {
+var _ = Describe("ATR", func() {
 	It("should return the correct values", func() {
 		in := []Candlestick{
 			{High: 1.1, Low: 0.9, Close: 1.0},
