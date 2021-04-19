@@ -2,10 +2,18 @@ package ta
 
 import "math"
 
-func toCandles(values []float64) []Candlestick {
-	var candles []Candlestick
+func toCandles(values []float64) []OHLCV {
+	var candles []OHLCV
 	for _, value := range values {
-		candles = append(candles, Candlestick{Close: value})
+		candles = append(candles, &Candlestick{close: value})
+	}
+	return candles
+}
+
+func toCloses(values []float64) []ClosePrice {
+	var candles []ClosePrice
+	for _, value := range values {
+		candles = append(candles, &Candlestick{close: value})
 	}
 	return candles
 }
