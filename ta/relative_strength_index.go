@@ -2,17 +2,17 @@ package ta
 
 import "math"
 
-// RSI calculates the Relative Strength for the candlesticks in the provided period
-func RSI(candles []Candlestick, period int) []float64 {
+// RSI calculates the Relative Strength for the closePricesticks in the provided period
+func RSI(closePrices []float64, period int) []float64 {
 	var up []float64
 	var down []float64
-	for i, candle := range candles[1:] {
-		previous := candles[i]
-		if candle.Close >= previous.Close {
-			up = append(up, candle.Close-previous.Close)
+	for i, closePrice := range closePrices[1:] {
+		previous := closePrices[i]
+		if closePrice >= previous {
+			up = append(up, closePrice-previous)
 			down = append(down, 0)
 		} else {
-			down = append(down, previous.Close-candle.Close)
+			down = append(down, previous-closePrice)
 			up = append(up, 0)
 		}
 	}
@@ -34,21 +34,21 @@ func RSI(candles []Candlestick, period int) []float64 {
 	return rsi
 }
 
-func LaguerreRSIDefault(vals []Candlestick) []float64 {
+func LaguerreRSIDefault(vals []float64) []float64 {
 	return LaguerreRSI(vals, 0.5)
 }
 
-// LaguerreRSI calculates the Laguerre Relative Strength for the candlesticks in the provided period
+// LaguerreRSI calculates the Laguerre Relative Strength for the closePricesticks in the provided period
 // from paper: http://mesasoftware.com/papers/TimeWarp.pdf
-func LaguerreRSI(candles []Candlestick, gamma float64) []float64 {
-	l0s := make([]float64, len(candles))
-	l1s := make([]float64, len(candles))
-	l2s := make([]float64, len(candles))
-	l3s := make([]float64, len(candles))
-	rsi := make([]float64, len(candles))
+func LaguerreRSI(closePrices []float64, gamma float64) []float64 {
+	l0s := make([]float64, len(closePrices))
+	l1s := make([]float64, len(closePrices))
+	l2s := make([]float64, len(closePrices))
+	l3s := make([]float64, len(closePrices))
+	rsi := make([]float64, len(closePrices))
 
-	for i, candle := range candles[1:] {
-		l0s[i] = (1-gamma)*candle.Close + gamma*l0s[i-1]
+	for i, closePrice := range closePrices[1:] {
+		l0s[i] = (1-gamma)*closePrice + gamma*l0s[i-1]
 		l1s[i] = -gamma*l0s[i] + l0s[i-1] + gamma*l1s[i-1]
 		l2s[i] = -gamma*l1s[i] + l1s[i-1] + gamma*l2s[i-1]
 		l3s[i] = -gamma*l2s[i] + l2s[i-1] + gamma*l3s[i-1]
