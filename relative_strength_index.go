@@ -33,3 +33,47 @@ func RSI(candles []Candlestick, period int) []float64 {
 	}
 	return rsi
 }
+
+func LaguerreRSIDefault(vals []Candlestick) []float64 {
+	return LaguerreRSI(vals, 0.5)
+}
+
+// LaguerreRSI calculates the Laguerre Relative Strength for the candlesticks in the provided period
+// from paper: http://mesasoftware.com/papers/TimeWarp.pdf
+func LaguerreRSI(candles []Candlestick, gamma float64) []float64 {
+	l0s := make([]float64, len(candles))
+	l1s := make([]float64, len(candles))
+	l2s := make([]float64, len(candles))
+	l3s := make([]float64, len(candles))
+	rsi := make([]float64, len(candles))
+
+	for i, candle := range candles[1:] {
+		l0s[i] = (1-gamma)*candle.Close + gamma*l0s[i-1]
+		l1s[i] = -gamma*l0s[i] + l0s[i-1] + gamma*l1s[i-1]
+		l2s[i] = -gamma*l1s[i] + l1s[i-1] + gamma*l2s[i-1]
+		l3s[i] = -gamma*l2s[i] + l2s[i-1] + gamma*l3s[i-1]
+
+		var cu float64
+		var cd float64
+		if l0s[i] >= l1s[i] {
+			cu = l0s[i] - l1s[i]
+		} else {
+			cd = l1s[i] - l0s[i]
+		}
+		if l1s[i] >= l2s[i] {
+			cu += +l1s[i] - l2s[i]
+		} else {
+			cd += l2s[i] - l1s[i]
+		}
+		if l2s[i] >= l3s[i] {
+			cu += l2s[i] - l3s[i]
+		} else {
+			cd += l3s[i] - l2s[i]
+		}
+
+		if cu+cd != 0 {
+			rsi[i] = cu / (cu + cd)
+		}
+	}
+	return rsi
+}

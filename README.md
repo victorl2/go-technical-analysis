@@ -4,8 +4,9 @@ A simple library written in go containing [indicators for technical analysis](ht
 
 + Relative Strength Index
 + Stochastic Oscillator
++ Average True Range
++ MACD
 + EMA
 + WMA
 + DEMA
 + OBV
-+ Average True Range

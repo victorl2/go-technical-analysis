@@ -13,12 +13,7 @@ func Stochastic(candles []Candlestick, kPeriod, dPeriod, smooth int) ([]float64,
 
 //limits returns the highest and lowest values present in candlestick slice
 func limits(candles []Candlestick) (float64, float64) {
-	if len(candles) == 0 {
-		return -1, -1
-	}
-
 	var highest, lowest = candles[0].High, candles[0].Low
-
 	for _, candle := range candles {
 		if candle.High > highest {
 			highest = candle.High

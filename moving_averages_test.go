@@ -21,7 +21,7 @@ var _ = Describe("SMA", func() {
 
 	It("should return a nil array the values slice is shorter than the period", func() {
 		in := []float64{0.0}
-		var out []float64
+		var out = []float64{0.0}
 		Expect(SMA(in, 5)).To(Equal(out))
 	})
 })
