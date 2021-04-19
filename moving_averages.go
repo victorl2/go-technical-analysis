@@ -11,18 +11,18 @@ func MEAN(values []float64) float64 {
 
 // SMA calculates the Simple Moving Average for the provided period
 func SMA(values []float64, period int) []float64 {
-	var result []float64
-	if len(values) < period {
-		return result
+	if period == 0 || len(values) < period {
+		return values
 	}
+	var sma []float64
 	for index := range values {
 		indexPlusOne := index + 1
 		if indexPlusOne >= period {
 			avg := MEAN(values[indexPlusOne-period : indexPlusOne])
-			result = append(result, avg)
+			sma = append(sma, avg)
 		}
 	}
-	return result
+	return sma
 }
 
 // WMA calculates the Weighted Moving Average for the provided period
