@@ -5,7 +5,7 @@ import (
 )
 
 // ATR calculates the Average True Range of an slice of Candlesticks for a given period
-func ATR(values []OHLCV, period int) []float64 {
+func ATR(values []Candlestick, period int) []float64 {
 	var atrs []float64
 	startIdx := period
 	endIdx := len(values) - 1
@@ -20,10 +20,10 @@ func ATR(values []OHLCV, period int) []float64 {
 	return atrs
 }
 
-func trueRanges(values []OHLCV) []float64 {
+func trueRanges(values []Candlestick) []float64 {
 	var result []float64
 	for idx, candle := range values[1:] {
-		tr := trueRange(candle.High(), candle.Low(), values[idx].Close())
+		tr := trueRange(candle.High, candle.Low, values[idx].Close)
 		result = append(result, tr)
 	}
 	return result
