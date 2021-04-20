@@ -1,27 +1,11 @@
 package ta
 
-type Value float64
-
-func (p Value) ClosePrice() float64 {
-	return float64(p)
-}
-
-//ClosePrice represents the close price of a candle
-type ClosePrice interface {
+//OHLCV - Represents a datapoint in candle format that contain Open,High, Low, Close prices and Volume data
+type OHLCV interface {
 	Close() float64
-}
-
-//OHLC - Represents a datapoint in candle format that contain Open,High, Low and Close prices
-type OHLC interface {
-	ClosePrice
 	Open() float64
 	High() float64
 	Low() float64
-}
-
-//OHLCV - Represents a datapoint in candle format that contain Open,High, Low, Close prices and Volume data
-type OHLCV interface {
-	OHLC
 	Volume() float64
 }
 

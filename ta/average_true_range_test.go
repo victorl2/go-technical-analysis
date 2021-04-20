@@ -7,7 +7,7 @@ import (
 
 var _ = Describe("ATR", func() {
 	It("should return the correct values", func() {
-		in := []OHLC{
+		in := []OHLCV{
 			&Candlestick{open: 0, high: 1.1, low: 0.9, close: 1.0},
 			&Candlestick{open: 0, high: 2.1, low: 1.9, close: 2.0},
 			&Candlestick{open: 0, high: 3.1, low: 2.9, close: 3.0},
@@ -22,7 +22,7 @@ var _ = Describe("ATR", func() {
 
 var _ = Describe("trueRanges", func() {
 	It("should return the correct values", func() {
-		in := []OHLC{
+		in := []OHLCV{
 			&Candlestick{open: 0, high: 1.1, low: 0.9, close: 1.0},
 			&Candlestick{open: 0, high: 2.1, low: 1.9, close: 2.0},
 			&Candlestick{open: 0, high: 3.1, low: 2.9, close: 3.0},

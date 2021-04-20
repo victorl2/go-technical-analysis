@@ -10,14 +10,6 @@ func toCandles(values []float64) []OHLCV {
 	return candles
 }
 
-func toCloses(values []float64) []ClosePrice {
-	var candles []ClosePrice
-	for _, value := range values {
-		candles = append(candles, &Candlestick{close: value})
-	}
-	return candles
-}
-
 func roundedValues(values []float64, roundOn float64, places int) []float64 {
 	var roundedVals []float64
 	for _, el := range values {

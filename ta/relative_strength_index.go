@@ -3,16 +3,16 @@ package ta
 import "math"
 
 // RSI calculates the Relative Strength for the closePricesticks in the provided period
-func RSI(prices []ClosePrice, period int) []float64 {
+func RSI(prices []float64, period int) []float64 {
 	var up []float64
 	var down []float64
 	for i, closePrice := range prices[1:] {
 		previous := prices[i]
-		if closePrice.Close() >= previous.Close() {
-			up = append(up, closePrice.Close()-previous.Close())
+		if closePrice >= previous {
+			up = append(up, closePrice-previous)
 			down = append(down, 0)
 		} else {
-			down = append(down, previous.Close()-closePrice.Close())
+			down = append(down, previous-closePrice)
 			up = append(up, 0)
 		}
 	}
@@ -34,13 +34,13 @@ func RSI(prices []ClosePrice, period int) []float64 {
 	return rsi
 }
 
-func LaguerreRSIDefault(vals []ClosePrice) []float64 {
+func LaguerreRSIDefault(vals []float64) []float64 {
 	return LaguerreRSI(vals, 0.5)
 }
 
 // LaguerreRSI calculates the Laguerre Relative Strength for the closePricesticks in the provided period
 // from paper: http://mesasoftware.com/papers/TimeWarp.pdf
-func LaguerreRSI(prices []ClosePrice, gamma float64) []float64 {
+func LaguerreRSI(prices []float64, gamma float64) []float64 {
 	l0s := make([]float64, len(prices))
 	l1s := make([]float64, len(prices))
 	l2s := make([]float64, len(prices))
@@ -48,7 +48,7 @@ func LaguerreRSI(prices []ClosePrice, gamma float64) []float64 {
 	rsi := make([]float64, len(prices))
 
 	for i, closePrice := range prices[1:] {
-		l0s[i] = (1-gamma)*closePrice.Close() + gamma*l0s[i-1]
+		l0s[i] = (1-gamma)*closePrice + gamma*l0s[i-1]
 		l1s[i] = -gamma*l0s[i] + l0s[i-1] + gamma*l1s[i-1]
 		l2s[i] = -gamma*l1s[i] + l1s[i-1] + gamma*l2s[i-1]
 		l3s[i] = -gamma*l2s[i] + l2s[i-1] + gamma*l3s[i-1]
