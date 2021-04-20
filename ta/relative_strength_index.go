@@ -47,8 +47,8 @@ func LaguerreRSI(prices []float64, gamma float64) []float64 {
 	l3s := make([]float64, len(prices))
 	rsi := make([]float64, len(prices))
 
-	for i, closePrice := range prices[1:] {
-		l0s[i] = (1-gamma)*closePrice + gamma*l0s[i-1]
+	for i := 1; len(prices)-1 < i; i++ {
+		l0s[i] = (1-gamma)*prices[i] + gamma*l0s[i-1]
 		l1s[i] = -gamma*l0s[i] + l0s[i-1] + gamma*l1s[i-1]
 		l2s[i] = -gamma*l1s[i] + l1s[i-1] + gamma*l2s[i-1]
 		l3s[i] = -gamma*l2s[i] + l2s[i-1] + gamma*l3s[i-1]
